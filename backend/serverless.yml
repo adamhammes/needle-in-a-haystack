@@ -1,0 +1,38 @@
+service: backend
+
+provider:
+  name: aws
+  runtime: python3.8
+  profile: personal
+
+functions:
+  app:
+    handler: handler.app
+    events:
+      - http:
+        path: /
+        method: ANY
+        cors: true
+      - http:
+        path: '{proxy+}'
+        method: ANY
+        cors: true
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    noDeploy:
+      - requests
+      - certifi
+      - chardet
+      - idna
+      - urllib3
+
+package:
+  exclude:
+    - '**/*'
+  include:
+    - handler.py
+
+plugins:
+  - serverless-python-requirements
