@@ -20,8 +20,12 @@ const fileToBase64 = async (file: File): Promise<string> => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = () => {
-      const dataUrl = reader.result as string
-      resolve(dataUrl.replace(dataSrcPrefix, ""))
+      const dataUrl = reader.result
+      if (typeof dataUrl === "string") {
+        resolve(dataUrl.replace(dataSrcPrefix, ""))
+      } else {
+        reject()
+      }
     }
     reader.onerror = error => reject(error)
   })
