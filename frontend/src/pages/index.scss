@@ -9,3 +9,35 @@
 .app__upload-button-container {
   margin: 1rem 0;
 }
+
+.result__listing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
+
+  padding: 0;
+  list-style-type: none;
+}
+
+.result__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.result__image-wrapper {
+  margin-top: 1rem;
+  height: 10rem;
+  width: 10rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.result__image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
