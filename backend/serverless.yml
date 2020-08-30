@@ -10,13 +10,13 @@ functions:
     handler: handler.app
     events:
       - http:
-        path: /
-        method: ANY
-        cors: true
+          path: /
+          method: ANY
+          cors: true
       - http:
-        path: '{proxy+}'
-        method: ANY
-        cors: true
+          path: '{proxy+}'
+          method: ANY
+          cors: true
 
 custom:
   pythonRequirements:
