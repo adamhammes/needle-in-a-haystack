@@ -1,5 +1,8 @@
 import React, { useState } from "react"
 
+import "./index.scss"
+import { ImageList } from "../components/image-list"
+
 const lambdaUrl = "https://k3bth73v75.execute-api.us-east-1.amazonaws.com/dev"
 
 const dataSrcPrefix = "data:image/jpeg;base64,"
@@ -59,52 +62,29 @@ export default function Home() {
   }
 
   return (
-    <div
-      style={{
-        maxWidth: "40rem",
-        padding: "1rem",
-        margin: "0 auto",
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-      }}
-    >
+    <div className="app__container">
       <h1>Upload an image</h1>
       <input
         type="file"
         onChange={event => setSelectedFiles(event.target.files)}
       />
-      <div style={{ marginBottom: "1rem" }}>
+      <div className="app__upload-button-container">
         <button disabled={!selectedFiles} onClick={uploadFiles}>
           upload
         </button>
       </div>
       {!!apiResponse && (
         <div>
-          <div style={{ marginBottom: "1rem" }}>
-            Severity: {apiResponse.severity}
-          </div>
+          <div>Severity: {apiResponse.severity}</div>
 
-          {Object.entries(apiResponse.images).map(
-            ([imageName, imageBase64]) => (
-              <div
-                key={imageName}
-                style={{
-                  boxShadow:
-                    "box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);",
-                }}
-              >
-                <img
-                  style={{
-                    width: "20rem",
-                    height: "20rem",
-                    objectFit: "cover",
-                    marginBottom: "2rem",
-                  }}
-                  src={dataSrcPrefix + imageBase64}
-                />
-              </div>
-            )
-          )}
+          <ImageList
+            images={Object.entries(apiResponse.images).map(
+              ([name, base64]) => ({
+                name,
+                src: dataSrcPrefix + base64,
+              })
+            )}
+          />
         </div>
       )}
     </div>
