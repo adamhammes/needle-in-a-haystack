@@ -9,6 +9,7 @@ import numpy
 class AppRequest(typing.TypedDict):
     image_name: str
     image_body: str
+    serialize_images: typing.Optional[bool]
 
 
 def serialize_image(image) -> str:
@@ -55,10 +56,14 @@ def app(event, _):
 
     response = process_image(image)
 
-    response["images"] = {
-        image_name: serialize_image(img)
-        for image_name, img in response["images"].items()
-    }
+    if request.get("serialize_images", False):
+        response["images"] = {
+            image_name: serialize_image(img)
+            for image_name, img in response["images"].items()
+        }
+    else:
+        del response["images"]
+
     return {
         "statusCode": 200,
         "headers": {
